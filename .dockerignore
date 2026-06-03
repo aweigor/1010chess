@@ -1,0 +1,11 @@
+.git
+.gitignore
+
+# Build artifacts / local data
+chess1010
+chess.db
+
+# Editor and OS files
+.DS_Store
+.idea
+.vscode
