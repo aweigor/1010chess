@@ -289,7 +289,24 @@ func (h *Handler) makeMove(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// ── Apply move ────────────────────────────────────────────────────────
-	m := Move{Start: req.From, End: req.To, Promotion: req.Promotion}
+	// Resolve against engine-generated legal moves to pick up IsCastle etc.
+	legal := rec.State.LegalMovesFrom(req.From[0], req.From[1])
+	var m Move
+	matched := false
+	for _, lm := range legal {
+		if lm.End == req.To {
+			m = lm
+			if req.Promotion != "" {
+				m.Promotion = req.Promotion
+			}
+			matched = true
+			break
+		}
+	}
+	if !matched {
+		jsonError(w, "illegal move", http.StatusBadRequest)
+		return
+	}
 	if !rec.State.MakeMove(m) {
 		jsonError(w, "illegal move", http.StatusBadRequest)
 		return
