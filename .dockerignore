@@ -1,5 +1,6 @@
 .git
 .gitignore
+.env
 
 # Build artifacts / local data
 chess1010

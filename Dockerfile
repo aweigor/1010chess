@@ -15,9 +15,8 @@ FROM gcr.io/distroless/static-debian12:nonroot
 WORKDIR /app
 
 COPY --from=builder /app/chess1010 /app/chess1010
-COPY --from=builder /app/static /app/static
 
-EXPOSE 8080
+EXPOSE 3002
 
 ENTRYPOINT ["/app/chess1010"]
-CMD ["-addr", ":8080", "-db", "/app/chess.db", "-static", "/app/static", "-assets", "/app/static/assets"]
+CMD ["-addr", ":3002", "-db", "/data/chess.db"]
