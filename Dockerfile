@@ -18,7 +18,7 @@ FROM gcr.io/distroless/static-debian12:nonroot
 WORKDIR /app
 
 COPY --from=builder /app/chess1010 /app/chess1010
-COPY --from=builder /data /data
+COPY --chown=65532:65532 --from=builder /data /data
 
 EXPOSE 3002
 
